@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Letra de DNI</title>
+    <script languaje="javascript">
+        function calcularLetraDni()
+        {
+            // 1º Recogempos el valor del DNI 
+            var dni = document.getElementById("DNI").value;
+
+            // 2ª Pasamos la variable de string a numero
+            dni = parseInt(dni);
+            
+            if(isNaN(dni))
+            {
+                alert("Debes introducir un número");
+
+            } else {
+  
+            // 3º Declaramos un array con las letras del DNI y su posicion.
+            var letras = ["T", "R",	"W", "A", "G", "M", "Y","F","P","D","X","B","N","J","Z","S","Q","V","H","L","C","K","E"];
+
+            // 4º Calculamos el módulo
+            var modulo = dni%23;
+
+            // 5º Buscamos el índice del resto en el array que sería la letra del DNI.
+            var resto = letras[modulo];
+
+            // 6º Mostramos el resulatdo.
+            alert ("Su NIF es: " + dni + "-" +resto);
+            }
+
+        }
+    
+    </script>
+</head>
+<body>
+    <body>
+        <label>Introduce tu DNI</label>
+        <input type="text" id="DNI">
+        <button onclick="calcularLetraDni();">Obtener Letra</button>
+    </body>
+</body>
+</html>
