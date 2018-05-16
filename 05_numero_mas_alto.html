@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Más alto</title>
+    <script type="text/javascript">
+        function masAlto() {
+            // Declaramos las variables:
+            var numero1 = document.getElementById("numero1").value;
+            var numero2 = document.getElementById("numero2").value;
+            var numero3 = document.getElementById("numero3").value;
+
+            // Los convertimos en enteros
+            numero1 = parseInt(numero1);
+            numero2 = parseInt(numero2);
+            numero3 = parseInt(numero3);
+
+            // Realizamos la comprobacion:
+            if(numero1==1){
+                alert("");
+            }
+
+
+        }
+
+
+    </script>
+</head>
+
+<body>
+    <label for="numero1">Introduce el primer número</label>
+    <input type="text" id="numero1">
+    <br>
+    <br>
+    <label for="numero2">Introduce el segundo número</label>
+    <input type="text" id="numero2">
+    <br>
+    <br>
+    <label for="numero3">Introduce el tercer número</label>
+    <input type="text" id="numero3">
+    <br>
+    <br>
+    <button onclick="masAlto();">Calcular</button>
+</body>
+
+</html>

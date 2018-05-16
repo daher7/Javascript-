@@ -1,15 +1,12 @@
 table {
     border: solid 2px rgb(96, 15, 226);
-    
 }
 
 tr, td{
-
     border: solid 1px rgb(96, 15, 226);
 }
 
 img{
     height: 250px;
     width: 250px;
-    visibility: hidden;
 }

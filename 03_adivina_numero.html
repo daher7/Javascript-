@@ -1,43 +1,42 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Adivina Número</title>
     <script languaje="javascript">
-        
+
         // Declaramos las funciones
-        function pedirNumero() 
-        {
+        function pedirNumero() {
             var numero = prompt("Introduce un número de 0 a 100");
-                numero = parseInt(numero);
+            numero = parseInt(numero);
             return numero;
         }
-        
+
         // Declaramos las variabless
 
         var num = Math.floor(Math.random() * 100 + 1); // Generamos un aleatorio de 1 a 100.
-        var intentos = 0; 
-        
-        do{
+        var intentos = 0;
+
+        do {
             var numero = pedirNumero(); // Llamamos a la funcion
-                if(numero > aleatorio){
-                    alert("El número es menor de " + numero);
-                } else if(numero<aleatorio){
-                    alert("El número es mayor de " + numero);
-                } else if(numero==aleatorio){
-                    alert("Enhorabuena, lo has adivinado");
-                }
+            if (numero > aleatorio) {
+                alert("El número es menor de " + numero);
+            } else if (numero < aleatorio) {
+                alert("El número es mayor de " + numero);
+            } else if (numero == aleatorio) {
+                alert("Enhorabuena, lo has adivinado");
+            }
             intentos++;
-<<<<<<< HEAD:03_adivina_numero.html
-        } while (intentos<5 && numero != aleatorio);
-=======
-        } while (intentos<5 || numero != aleatorio);
->>>>>>> 77076023a511bc4e84724f9a59a4b6ee4c847e6e:02_adivina_numero.html
-            alert ("El numero a adivinar era el " + aleatorio);
+        } while (intentos < 5 && numero != aleatorio);
+
+        alert("El numero a adivinar era el " + aleatorio);
 
     </script>
 </head>
+
 <body>
-    
+
 </body>
+
 </html>

@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Indice IMC</title>
     <script languaje="javascript">
-        
+
         //Creamos una funcion para recoger los datos del formulario:
-        function calcularImc()
-        {
+        function calcularImc() {
             // Recogemos los valores text introducidos en el formulario:
             var altura = document.getElementById("altura").value;
             var peso = document.getElementById("peso").value;
@@ -15,59 +15,66 @@
             // Convertimos en float las variables text:
             altura = parseFloat(altura);
             peso = parseFloat(peso);
-            
+
             // Calculamos el IMC
-            var resultado = peso/(altura*altura); 
+            var resultado = peso / (altura * altura);
             //resultado = resultado.toFixed(2);
-            
+
             //En función del valor del resultado tendremos varios tipos y su respectiva imagen:
-            if (resultado<16){
+            if (resultado < 16) {
                 var descripcion = "Desnutrido";
-                document.getElementById ("imagen").src = "media/img/desnutrido.png";
+                document.getElementById("imagen").src = "media/img/desnutrido.png";
 
             } else if (resultado >= 16 && resultado < 18) {
                 var descripcion = "Delgado";
-                document.getElementById ("imagen").src = "media/img/delgado.jpg";
+                document.getElementById("imagen").src = "media/img/delgado.jpg";
 
             } else if (resultado >= 18 && resultado < 25) {
                 var descripcion = "Normal";
-                document.getElementById ("imagen").src = "media/img/normal.jpg";
+                document.getElementById("imagen").src = "media/img/normal.jpg";
 
             } else if (resultado >= 25 && resultado < 31) {
                 var descripcion = "Sobrepeso";
-                document.getElementById ("imagen").src = "media/img/sobrepeso.jpg";
+                document.getElementById("imagen").src = "media/img/sobrepeso.jpg";
 
-            } else if(resultado>=31){
+            } else if (resultado >= 31) {
                 var descripcion = "Obesidad";
-                document.getElementById ("imagen").src = "media/img/obeso.jpg";
-            } 
-                             
+                document.getElementById("imagen").src = "media/img/obeso.jpg";
+            }
+
             //Devolvemos los resultados al formulario:
-            document.getElementById("imc").value=resultado.toFixed(2); 
-            document.getElementById("descripcion").value=descripcion;
-            
+            document.getElementById("imc").value = resultado.toFixed(2);
+            document.getElementById("descripcion").value = descripcion;
+
         }
-      </script>
+    </script>
 </head>
+
 <body>
     <!-- Formulario -->
     <h1>Calcula tu IMC</h1>
     <label for="altura">Introduce tu altura en m:</label>
     <input type="text" name="altura" id="altura">
-    <br><br>
+    <br>
+    <br>
     <label for="peso">Introduce tu peso en Kg:</label>
     <input type="text" name="peso" id="peso">
-    <br><br>  
+    <br>
+    <br>
     <!--  Botón -->
     <button onclick="calcularImc();">Calcular IMC</button>
-    <br><br>
+    <br>
+    <br>
     <!-- Devolvemos valores -->
     <label for="imc">IMC</label>
     <input type="text" name="imc" id="imc" size="5">
     <label for="descripcion">Tipo</label>
-    <input type="text" name="descripcion" id="descripcion"><br><br>
+    <input type="text" name="descripcion" id="descripcion">
+    <br>
+    <br>
     <img id="imagen">
-    
-    
+
+
 </body>
+
 </html>

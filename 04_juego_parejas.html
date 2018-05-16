@@ -1,68 +1,76 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="css/estilo.css">
     <title>Juego de las Parejas</title>
     <script type="text/javascript">
 
-    // Al cargar la pagina llamamos a la función inicial.
-    onload = inicial;
-    
-    // Declaramos una variable para controlar si es la primera o segunda vez que pulsamos el boton del raton
-    var imagen_tocada;
+        // Al cargar la pagina llamamos a la función inicial.
+        window.onload = iniciarTablero;
 
-    // Definimos la funcion inicial
-    function inicial() {
-      var lista_td = document.querySelectorAll("td"); // Seleccionamos todos las celdas de la tabla.
-      var imagen_tocada = false; 
+        // Definimos la funcion inicial
+        function iniciarTablero() {
+            
+            var lista_td = document.querySelectorAll("td"); // Seleccionamos todos las celdas de la tabla.
+            var imagen_tocada = false;                      // Declaramos una variable para controlar si es la primera o segunda vez que pulsamos el boton del raton y la iniciamos a false
 
-      for (var i = 0; i < lista_td.length; i++) {       
-        lista_td[i].addEventListener('click', detectarBoton); // Cada vez que pulsamos una imagen llamamos a la funcion
-      }
-    }
-    
-    function detectarBoton(evento){
-        if(!imagen_tocada){
-            imagen_tocada=true;
-            alert("Es la primera vez");
-            //obtener imagen tocada
-            //guardarmela en var global
-            //mostrarla.
-        } else {
-            alert("Es la segunda vez");
-            imagen_tocada=false;
+            for (var i = 0; i < lista_td.length; i++) {
+                lista_td[i].addEventListener('click', tocadaImagen); // Cada vez que pulsamos una imagen llamamos a la funcion
+            }
         }
-        imagen_tocada= !imagen_tocada;
-    }
 
-    function ocultaImagen(evento) {
-      //target, es el elemento tocado
-      //currentTarget, es el elemento contenedor
-      var img_pulsada = evento.currentTarget.firstElementChild;
-      var estilo = img_pulsada.style.visibility;
-      if (estilo == 'visible' || estilo == '') {
-        img_pulsada.style.visibility = 'hidden';
-      }
-      else {
-        img_pulsada.style.visibility = 'visible';
-      }
-    }
+        function tocadaImagen(evento) {
+            if (!imagen_tocada) {
+                imagen_tocada = true;
+                alert("Es la primera vez");
+                //obtener imagen tocada
+                //guardarmela en var global
+                //mostrarla.
+            } else {
+                alert("Es la segunda vez");
+                imagen_tocada = false;
+            }
+            //imagen_tocada= !imagen_tocada;
+        }
 
+        function ocultaImagen(evento) {
+            //target, es el elemento tocado
+            //currentTarget, es el elemento contenedor
+            var img_pulsada = evento.currentTarget.firstElementChild; // es la imagen actual, y lo recogemos con el evento y con el current target.
+            var estilo = img_pulsada.style.visibility;
+            if (estilo == 'visible' || estilo == '') {
+                img_pulsada.style.visibility = 'hidden';
+            }
+            else {
+                img_pulsada.style.visibility = 'visible';
+            }
+        }
     </script>
 
 </head>
+
 <body>
     <h1>Encuentra las Parejas</h1>
     <table>
         <tr>
-            <td><img src="media/img/bart.gif" /></td>
-            <td><img src="media/img/pantera.jpg" /></td>    
+            <td>
+                <img src="media/img/bart.gif" />
+            </td>
+            <td>
+                <img src="media/img/pantera.jpg" />
+            </td>
         </tr>
         <tr>
-            <td><img src="media/img/pantera.jpg" /></td>
-            <td><img src="media/img/bart.gif" /></td>    
+            <td>
+                <img src="media/img/pantera.jpg" />
+            </td>
+            <td>
+                <img src="media/img/bart.gif" />
+            </td>
         </tr>
     </table>
 </body>
+
 </html>
