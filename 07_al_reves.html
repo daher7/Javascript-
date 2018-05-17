@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Palabra al revés</title>
+    <script type="text/javascript">
+        // Llamamos a la función:
+        function palabraReves() {
+            //Recogemos la palabra
+            var palabra = document.getElementById("palabra").value;
+            var tamano = palabra.length - 1;
+            var palabra_reves = "";
+
+            //Ahora vamos a crear la palabra al reves recorriendo el array existente comenzando por el final.
+            for (var i = 0; i <= tamano; i++) {
+
+                palabra_reves = palabra_reves + palabra.charAt(tamano - i);
+
+            }
+            //Hacemos la comprobación.
+            if (palabra_reves == palabra) {
+                alert("Es un palíndromo");
+            } else {
+                alert("no es un palindromo");
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <label for="nota">Introduce una palabra</label>
+    <input type="text" name="palabra" id="palabra">
+    <button onclick="palabraReves();">Revertir</button>
+</body>
+
+</html>

@@ -24,11 +24,11 @@
             var bd = true;
             var palabra = document.getElementById("palabra").value;
             var i = 0;
-            var j = cad.length - 1;
+            var j = palabra.length - 1;
 
             while ((i <= j) && (bd == true)) {
-                //bd = cad.charAt(i) == cad.charAt(j);
-                if (cad.charAt(i) == cad.charAt(j)) { // Comparamos la primera y última letra
+                //bd = palabra.charAt(i) == palabra.charAt(j);
+                if (palabra.charAt(i) == palabra.charAt(j)) { // Comparamos la primera y última letra
                     bd = true;
                 } else {
                     bd = false;
@@ -57,7 +57,7 @@
             var palabra_array = palabra.split(" ");
 
             var invertida = palabra_array.reverse(); 
-            alert(invertida);
+            alert(invertidapw);
         }
 
     </script>

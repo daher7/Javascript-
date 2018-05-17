@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Más alto</title>
+    <title>Número más alto</title>
     <script type="text/javascript">
         function masAlto() {
             // Declaramos las variables:
@@ -16,15 +16,17 @@
             numero2 = parseInt(numero2);
             numero3 = parseInt(numero3);
 
+            var numeros = new Array(numero1, numero2, numero3);
+            var maximo = 0;
+
             // Realizamos la comprobacion:
-            if(numero1==1){
-                alert("");
+            for (var i = 0; i <= 2; i++) {  // Recorremos el array.
+                if (numeros[i] > maximo) {  // Si el valor es mayor de 0 lo vamos guardando en la variable maximo.
+                    maximo = numeros[i];
+                }
             }
-
-
+            alert("El número más alto es el: " + maximo);
         }
-
-
     </script>
 </head>
 
