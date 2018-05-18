@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Crear Tabla</title>
+    <script type="text/javascript"> 
+
+
+        //1º Declaramos el array con los nombres que vamos introduciendo.
+        var nombres = new Array();
+       
+        //2º Declaramos la funcion
+        function crearTabla(){
+
+        var nombre = document.getElementById("nombre").value;   // Recogemos el nombre inroducido.
+        nombres.push(nombre);    
+                                       // Añadimos el nombre al array.
+        var tabla = document.getElementById("tabla");
+        var nueva_fila = document.createElement("TR");
+        var columna = document.createElement("TD");
+       
+        columna.innerHTML = nombre;
+        columna.addEventListener('click', filaTocada);
+
+        nueva_fila.appendChild(columna);
+        tabla.appendChild(nueva_fila);
+        
+
+            limpiar();
+        }
+        
+        function filaTocada (evento){
+            var td_tocado = evento.target;
+            td_tocado.innerHTML="";
+
+        }
+
+        function limpiar() {
+            document.getElementById("nombre").value = "";
+            document.getElementById('nombre').focus();
+        }
+
+        function borrarNombre(){
+
+            var nombre_elegido = evento.currentTarget.firstElementChild; // es el nombre seleccionado, y lo recogemos con el evento y con el current target.
+
+        }
+        
+
+    </script>
+</head>
+
+<body>
+
+    <label for="nombre">Introduce tu nombre:</label>
+    <br>
+    <br>
+    <input type="text" name="nombre" id="nombre">
+    <button onclick="crearTabla();">Añadir</button>
+    <table>
+        <tr>
+            <td id="tabla"></td>
+        </tr>
+    </table>
+
+</body>
+
+</html>
