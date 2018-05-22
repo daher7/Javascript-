@@ -9,44 +9,43 @@
 
         //1º Declaramos el array con los nombres que vamos introduciendo.
         var nombres = new Array();
-       
+
         //2º Declaramos la funcion
-        function crearTabla(){
+        function crearTabla() {
 
-        var nombre = document.getElementById("nombre").value;   // Recogemos el nombre inroducido.
-        nombres.push(nombre);    
-                                       // Añadimos el nombre al array.
-        var tabla = document.getElementById("tabla");
-        var nueva_fila = document.createElement("TR");
-        var columna = document.createElement("TD");
-       
-        columna.innerHTML = nombre;
-        columna.addEventListener('click', filaTocada);
+            var nombre = document.getElementById("nombre").value;   // Recogemos el nombre introducido.
+            nombres.push(nombre);                                   // Añadimos el nombre al array.
+            
+            // Declaramos las variables necesarias para crear las nuevas tablas según las vamos aádiendo.
+            var tabla = document.getElementById("tabla");           
+            var nueva_fila = document.createElement("TR");
+            var columna = document.createElement("TD");
 
-        nueva_fila.appendChild(columna);
-        tabla.appendChild(nueva_fila);
-        
+            columna.innerHTML = nombre;
+            columna.addEventListener('click', filaTocada);
 
-            limpiar();
-        }
-        
-        function filaTocada (evento){
-            var td_tocado = evento.target;
-            td_tocado.innerHTML="";
+            nueva_fila.appendChild(columna);
+            tabla.appendChild(nueva_fila);
 
+            limpiar();                   // llamamos a la función limpiar para que al introducir un nombre nuevo, la casilla del input quede vacía.
         }
 
         function limpiar() {
             document.getElementById("nombre").value = "";
-            document.getElementById('nombre').focus();
+            document.getElementById("nombre").focus();
         }
 
-        function borrarNombre(){
+        function filaTocada(evento) {
+            var td_tocado = evento.target;
+            td_tocado.innerHTML = "";
+        }
+
+        function borrarNombre() {
 
             var nombre_elegido = evento.currentTarget.firstElementChild; // es el nombre seleccionado, y lo recogemos con el evento y con el current target.
 
         }
-        
+
 
     </script>
 </head>

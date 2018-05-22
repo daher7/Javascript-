@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Elige Colors</title>
+    <style>
+        img {
+            height: 500px;
+            width: 400px;
+        }
+
+        #negro {
+            width: 25px;
+            height: 25px;
+            background: #000;
+        }
+
+        #blanco {
+            border: 1px solid #000;
+            width: 25px;
+            height: 25px;
+            background: #fbfbfc;
+        }
+        #play {
+            border: 1px solid #000;
+            width: 50px;
+            height: 25px;
+            background: #85dfe6;
+        }
+        #stop {
+            border: 1px solid #000;
+            width: 50px;
+            height: 25px;
+            background: #b3b3ce;
+        }
+    </style>
+    <script type="text/javascript">
+
+        // Cargamos una imagen al cargar la pagina, por defecto la negra.
+        window.onload = mostrarNegro;
+        
+        // Definimos las funciones de los botones:
+
+        function mostrarNegro() {
+            document.getElementById("imagen").src = "media/img/metallica_negra.jpg";
+        }
+
+        function mostrarBlanco() {
+            document.getElementById("imagen").src = "media/img/metallica_blanca.jpeg";
+        }
+
+        function iniciarCarrusel(){
+            
+        }
+    </script>
+</head>
+
+<body>
+    <div>
+        <img id="imagen">
+    </div>
+    <table>
+        <tr>
+            <td id="negro" onclick="mostrarNegro();"></td>
+            <td id="blanco" onclick="mostrarBlanco();"></td>
+            <td id="play" onclick="iniciarCarrusel();">Play</td>
+            <td id="stop" onclick="pararCarrusel();">Stop</td>
+        </tr>
+    </table>
+</body>
+
+</html>
