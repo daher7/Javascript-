@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Indice IMC</title>
+    <script src="js/imc.js"></script>
+    <script languaje="javascript">
+
+
+        //Creamos una funcion para recoger los datos del formulario:
+
+        function calcularImc() {
+            // Recogemos los valores text introducidos en el formulario:
+            var altura = document.getElementById("altura").value;
+            var peso = document.getElementById("peso").value;
+
+            // Convertimos en float las variables text:
+            altura = parseFloat(altura);
+            peso = parseFloat(peso);
+
+            // Definimos la variable persona
+            var persona = new Persona(peso, altura);
+
+            // Calculamos el IMC llamando a las funciones
+            var resultado = persona.calcularImcn();
+            var descripcion = persona.calcularImcl();
+
+            // Devolvemos la informacion a la web
+            document.getElementById("imc").value = resultado;
+            document.getElementById("descripcion").value = descripcion;
+            document.getElementById("imagen").src = "media/img/" + descripcion + ".jpg";
+        }
+    </script>
+</head>
+
+<body>
+    <!-- Formulario -->
+    <h1>Calcula tu IMC</h1>
+    <label for="altura">Introduce tu altura en m:</label>
+    <input type="text" name="altura" id="altura">
+    <br>
+    <br>
+    <label for="peso">Introduce tu peso en Kg:</label>
+    <input type="text" name="peso" id="peso">
+    <br>
+    <br>
+    <!--  Botón -->
+    <button onclick="calcularImc();">Calcular IMC</button>
+    <br>
+    <br>
+    <!-- Devolvemos valores -->
+    <label for="imc">IMC</label>
+    <input type="text" name="imc" id="imc" size="5">
+    <label for="descripcion">Tipo</label>
+    <input type="text" name="descripcion" id="descripcion">
+    <br>
+    <br>
+    <img id="imagen">
+
+
+</body>
+
+</html>

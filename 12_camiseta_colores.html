@@ -22,12 +22,15 @@
             height: 25px;
             background: #fbfbfc;
         }
+
         #play {
+            background: #85dfe6;
             border: 1px solid #000;
             width: 50px;
             height: 25px;
-            background: #85dfe6;
+
         }
+
         #stop {
             border: 1px solid #000;
             width: 50px;
@@ -38,8 +41,21 @@
     <script type="text/javascript">
 
         // Cargamos una imagen al cargar la pagina, por defecto la negra.
-        window.onload = mostrarNegro;
-        
+        window.onload = inicio;
+        var array_fotos;
+        var elemento_imagen;
+        var num_foto_actual;
+
+        function inicio() {
+            array_fotos = new Array();
+            num_foto_actual = 0;
+            array_fotos.push("media/img/metallica_negra.jpg");
+            array_fotos.push("media/img/metallica_blanca.jpeg");
+            elemento_imagen = document.getElementById("imagen");
+            elemento_imagen.src = array_fotos(num_foto_actual);
+
+        }
+
         // Definimos las funciones de los botones:
 
         function mostrarNegro() {
@@ -50,9 +66,7 @@
             document.getElementById("imagen").src = "media/img/metallica_blanca.jpeg";
         }
 
-        function iniciarCarrusel(){
-            
-        }
+
     </script>
 </head>
 
@@ -62,8 +76,8 @@
     </div>
     <table>
         <tr>
-            <td id="negro" onclick="mostrarNegro();"></td>
-            <td id="blanco" onclick="mostrarBlanco();"></td>
+            <td id="negro"></td>
+            <td id="blanco"></td>
             <td id="play" onclick="iniciarCarrusel();">Play</td>
             <td id="stop" onclick="pararCarrusel();">Stop</td>
         </tr>
