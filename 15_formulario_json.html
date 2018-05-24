@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario</title>
+    <script>
+        // Declaramos una variable para establecer la comunicación con el servidor.
+        var xmlHttp = new XMLHttpRequest();
+        const DIR_SERV = "http://10.1.1.10:8080/appwebprofe/RegistrarPersona"
+
+        function procesarEventos(){
+            console.log("Procesar eventos invocados "+xmlHttp.readyState);
+            // Cuando readyState valga 4, procesamos el mensaje de respuesta.
+
+        }
+
+        // DEclaramos la función:
+        function enviarFormulario() {
+            var nombre = document.getElementById("nombre").value;
+            var edad = document.getElementById("edad").value;
+
+            console.log("Nombre: " + nombre + " Edad: " + edad);
+
+            //Generamos un objeto
+            var persona = {
+                nombre: nombre,
+                edad: edad
+            }
+            alert("Persona intro = " + persona.nombre);
+            alert("Persona intro = " + persona.edad);
+
+            var persona_json = JSON.stringify(persona) // Serializar. Pasamos una variable de memoria a texto.
+            console.log(persona_json);
+
+            // Preparo la llamada
+            xmlHttp.onreadystatechange = procesarEventos;
+            xmlHttp.open("POST", DIR_SERV, true);
+            xmlHttp.setRequestHeader("Content-Type", "application/json");   // El tipo MIME para que el servidor sepa el archivo que le enviamos.
+            xmlHttp.send(persona_json);                                     // El cuerpo del mensaje.
+        }
+
+    </script>
+</head>
+
+<body>
+    <form action="" method="get">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre">
+        <br>
+        <br>
+        <label for="edad">Edad:</label>
+        <input type="text" id="edad">
+        <br>
+        <br>
+        <button onclick="enviarFormulario();">Enviar</button>
+    </form>
+</body>
+
+</html>

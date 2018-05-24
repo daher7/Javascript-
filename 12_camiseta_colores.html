@@ -6,8 +6,8 @@
     <title>Elige Colors</title>
     <style>
         img {
-            height: 500px;
-            width: 400px;
+            height: 600px;
+            width: 500px;
         }
 
         #negro {
@@ -23,6 +23,13 @@
             background: #fbfbfc;
         }
 
+        #gris {
+            border: 1px solid #000;
+            width: 25px;
+            height: 25px;
+            background: rgb(95, 89, 89);
+        }
+
         #play {
             background: #85dfe6;
             border: 1px solid #000;
@@ -35,36 +42,80 @@
             border: 1px solid #000;
             width: 50px;
             height: 25px;
-            background: #b3b3ce;
+            background: #c44881;
         }
     </style>
     <script type="text/javascript">
 
         // Cargamos una imagen al cargar la pagina, por defecto la negra.
-        window.onload = inicio;
+        onload = inicio;
+
+        // Declaramos las variables.
         var array_fotos;
-        var elemento_imagen;
-        var num_foto_actual;
+        var imagen;
+        var num_foto;
+        var id_interval;    // Para parar el carrusel
 
+        // Declaramos la función inicial.
         function inicio() {
-            array_fotos = new Array();
-            num_foto_actual = 0;
-            array_fotos.push("media/img/metallica_negra.jpg");
-            array_fotos.push("media/img/metallica_blanca.jpeg");
-            elemento_imagen = document.getElementById("imagen");
-            elemento_imagen.src = array_fotos(num_foto_actual);
+
+            num_foto = 0;            // Por defecto se muestra la pantalla negra.
+            array_fotos = new Array();      // El array donde van alojadas las fotos
+            array_fotos.push("media/img/negra.jpg"); //0
+            array_fotos.push("media/img/blanca.jpeg"); //1
+            array_fotos.push("media/img/gris.jpg")  //2
+            console.log(array_fotos);           // Vemos el contenido del array
+
+            imagen = document.getElementById("imagen");
+            imagen.src = array_fotos[num_foto];
+
+
+            // DEfinimos los eventos de cada boton
+            var td1 = document.getElementById("negro");
+            td1.addEventListener('click', cambiarColor);
+            var td2 = document.getElementById("blanco");
+            td2.addEventListener('click', cambiarColor);
+            var td3 = document.getElementById("gris");
+            td3.addEventListener('click', cambiarColor);
 
         }
 
-        // Definimos las funciones de los botones:
-
-        function mostrarNegro() {
-            document.getElementById("imagen").src = "media/img/metallica_negra.jpg";
+        // Definimos la función para cambiar de foto al pulsar un botón..
+        function cambiarColor(evento) {
+            if (evento.currentTarget.id == 'negro') {
+                imagen.src = 'media/img/negra.jpg';
+                num_foto = array_fotos.indexOf('media/img/negra.jpg');
+            } else if (evento.currentTarget.id == 'blanco') {
+                imagen.src = 'media/img/blanca.jpeg';
+                num_foto = array_fotos.indexOf('media/img/blanca.jpeg');
+            } else {
+                imagen.src = 'media/img/gris.jpg';
+                num_foto = array_fotos.indexOf('media/img/gris.jpg');
+            }
         }
 
-        function mostrarBlanco() {
-            document.getElementById("imagen").src = "media/img/metallica_blanca.jpeg";
+        // Definimos la función para iniciar el carrusel.
+        function iniciarCarrusel() {
+
+            id_interval = setInterval(cambiarFoto, 1500);
         }
+
+        // Definimos la funcion para cambiar la foto en el carrusel
+        function cambiarFoto() {
+
+            if (num_foto == 2) {
+                num_foto = 0;
+            } else {
+                num_foto++;
+            }
+            imagen.src = array_fotos[num_foto];
+        }
+        // Funcion para parar el carrusel.
+        function pararCarrusel() {
+            clearInterval(id_interval);
+        }
+
+
 
 
     </script>
@@ -78,6 +129,7 @@
         <tr>
             <td id="negro"></td>
             <td id="blanco"></td>
+            <td id="gris"></td>
             <td id="play" onclick="iniciarCarrusel();">Play</td>
             <td id="stop" onclick="pararCarrusel();">Stop</td>
         </tr>
