@@ -3,8 +3,17 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Elige Colors</title>
+    <title>Camiseta colores</title>
     <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+       body {
+            border: 1px solid #000;
+           margin: 0 auto;
+           width: 26.1%;
+       }
         img {
             height: 600px;
             width: 500px;
@@ -47,24 +56,25 @@
     </style>
     <script type="text/javascript">
 
-        // Cargamos una imagen al cargar la pagina, por defecto la negra.
+        // Al cargar la pagina, llamamos a la funcion inicio.
         onload = inicio;
 
         // Declaramos las variables.
         var array_fotos;
         var imagen;
         var num_foto;
-        var id_interval;    // Para parar el carrusel
+        var intervalo;    // Para parar el carrusel
 
         // Declaramos la función inicial.
         function inicio() {
 
-            num_foto = 0;            // Por defecto se muestra la pantalla negra.
-            array_fotos = new Array();      // El array donde van alojadas las fotos
-            array_fotos.push("media/img/negra.jpg"); //0
-            array_fotos.push("media/img/blanca.jpeg"); //1
-            array_fotos.push("media/img/gris.jpg")  //2
-            console.log(array_fotos);           // Vemos el contenido del array
+            num_foto = 0;                               // Por defecto se muestra la pantalla negra.
+            array_fotos = new Array();                  // El array donde van alojadas las fotos
+            array_fotos.push("media/img/negra.jpg");    //0
+            array_fotos.push("media/img/blanca.jpeg");  //1
+            array_fotos.push("media/img/gris.jpg")      //2
+            // Vemos el contenido del array
+            console.log(array_fotos);                   
 
             imagen = document.getElementById("imagen");
             imagen.src = array_fotos[num_foto];
@@ -72,7 +82,7 @@
 
             // DEfinimos los eventos de cada boton
             var td1 = document.getElementById("negro");
-            td1.addEventListener('click', cambiarColor);
+            td1.addEventListener('click', cambiarColor);    // Le asignamos el listener a cada botón.
             var td2 = document.getElementById("blanco");
             td2.addEventListener('click', cambiarColor);
             var td3 = document.getElementById("gris");
@@ -97,7 +107,7 @@
         // Definimos la función para iniciar el carrusel.
         function iniciarCarrusel() {
 
-            id_interval = setInterval(cambiarFoto, 1500);
+            intervalo = setInterval(cambiarFoto, 1500);  // La foto cambia cada 1.5 segundos.
         }
 
         // Definimos la funcion para cambiar la foto en el carrusel
@@ -112,11 +122,8 @@
         }
         // Funcion para parar el carrusel.
         function pararCarrusel() {
-            clearInterval(id_interval);
+            clearInterval(intervalo);
         }
-
-
-
 
     </script>
 </head>

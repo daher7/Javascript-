@@ -9,9 +9,24 @@
         var xmlHttp = new XMLHttpRequest();
         const DIR_SERV = "http://10.1.1.10:8080/appwebprofe/RegistrarPersona"
 
-        function procesarEventos(){
-            console.log("Procesar eventos invocados "+xmlHttp.readyState);
+        function procesarEventos() {
+            console.log("Procesar eventos invocados " + xmlHttp.readyState);
             // Cuando readyState valga 4, procesamos el mensaje de respuesta.
+
+            if (xmlHttp.readyState == 4) {
+                console.log(xmlHttp.responseText);
+            } // ya he acabado
+            
+            if(xmlHttp.status==200){
+                console.log("Éxito");
+                console.log(xmlHttp.responseText);
+                var mensaje_respuesta = JSON.parse(xmlHttp.responseText);
+                console.log(mensaje_respuesta.nonbre);
+                console.log(mensaje_respuesta.saludo);
+
+            } else {
+                console.log("Error");
+            }
 
         }
 
@@ -38,23 +53,25 @@
             xmlHttp.open("POST", DIR_SERV, true);
             xmlHttp.setRequestHeader("Content-Type", "application/json");   // El tipo MIME para que el servidor sepa el archivo que le enviamos.
             xmlHttp.send(persona_json);                                     // El cuerpo del mensaje.
+
+
         }
 
     </script>
 </head>
 
 <body>
-    <form action="" method="get">
-        <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre">
-        <br>
-        <br>
-        <label for="edad">Edad:</label>
-        <input type="text" id="edad">
-        <br>
-        <br>
-        <button onclick="enviarFormulario();">Enviar</button>
-    </form>
+
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre">
+    <br>
+    <br>
+    <label for="edad">Edad:</label>
+    <input type="text" id="edad">
+    <br>
+    <br>
+    <button onclick="enviarFormulario();">Enviar</button>
+
 </body>
 
 </html>

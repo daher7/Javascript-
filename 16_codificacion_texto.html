@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Codificacion de Texto</title>
+    <link rel="stylesheet" type="text/css" href="css/codificacion.css">
+    <script>
+
+        function encriptar(mensaje_original) {
+            var encriptado = "";
+            var tamano = mensaje_original.length;
+            
+            var codigo_letra;
+            for (var i = 0; i < tamano; i++) {
+                
+                codigo_letra = mensaje_original.charCodeAt(i);
+                encriptado = encriptado + codigo_letra;
+            }
+            return encriptado;
+        }
+        function recogerTexto() {
+            var original = document.getElementById("original").value;
+            var m_encriptado = encriptar(original);
+            document.getElementById("codificado").value = m_encriptado;
+        }
+
+    </script>
+</head>
+
+<body>
+    <textarea name="texto_original" id="original" cols="40" rows="20"></textarea>
+    <button onclick="recogerTexto();">Codificar </button>
+    <textarea name="texto_codificado" id="codificado" cols="40" rows="20"></textarea>
+</body>
+
+</html>
