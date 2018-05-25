@@ -7,7 +7,7 @@
     <script>
         // Declaramos una variable para establecer la comunicación con el servidor.
         var xmlHttp = new XMLHttpRequest();
-        const DIR_SERV = "http://10.1.1.10:8080/appwebprofe/RegistrarPersona"
+        const DIR_SERV = "http://10.1.2.10:8080/appwebprofe/RegistrarPersona"
 
         function procesarEventos() {
             console.log("Procesar eventos invocados " + xmlHttp.readyState);
@@ -16,7 +16,7 @@
             if (xmlHttp.readyState == 4) {
                 console.log(xmlHttp.responseText);
             } // ya he acabado
-            
+
             if(xmlHttp.status==200){
                 console.log("Éxito");
                 console.log(xmlHttp.responseText);

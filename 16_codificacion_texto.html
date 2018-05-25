@@ -7,14 +7,30 @@
     <link rel="stylesheet" type="text/css" href="css/codificacion.css">
     <script>
 
+        // Declaramos las variables:
+        const DIR_SERV = "http://10.1.2.10:8080/appwebprofe/ObtenerClave";
+        var xmlHttp = new XMLHttpRequest();
+        var clave=0;
+        
+        // Declaramos las funciones necesarias.
+        
+       function recogerClave() {
+            
+            xmlHttp.open("GET", DIR_SERV, true);
+            xmlHttp.send(null); 
+            clave = xmlHttp.responseText;     // Recogemos el valor de la clave
+            clave = parseInt(clave);          // La convertimos en número.                                
+        }
+        
         function encriptar(mensaje_original) {
             var encriptado = "";
             var tamano = mensaje_original.length;
-            
+
             var codigo_letra;
             for (var i = 0; i < tamano; i++) {
-                
+
                 codigo_letra = mensaje_original.charCodeAt(i);
+                console.log(typeof mensaje);
                 encriptado = encriptado + codigo_letra;
             }
             return encriptado;
@@ -24,6 +40,11 @@
             var m_encriptado = encriptar(original);
             document.getElementById("codificado").value = m_encriptado;
         }
+
+        // Al cargar la página, llamamos al servidor para que nos de la clave para la codificación.
+        window.onload = recogerClave;
+        
+
 
     </script>
 </head>
