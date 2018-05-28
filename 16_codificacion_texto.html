@@ -14,7 +14,6 @@
         var clave;
         var original;
         var codificado;
-        var m_encriptado;
 
         // Al cargar la página, llamamos al servidor para que nos de la clave para la codificación.
         onload = recogerClave;
@@ -43,9 +42,9 @@
         }
 
         function recogerTexto() {
-            var original = document.getElementById("original").value;
-            var m_encriptado = encriptar(original);
-            document.getElementById("codificado").value = m_encriptado;
+            original = document.getElementById("original").value;
+            codificado = encriptar(original);
+            document.getElementById("codificado").value = codificado;
         }
 
         // Mandamos la información al servidor.
