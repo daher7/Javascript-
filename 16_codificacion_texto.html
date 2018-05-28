@@ -9,41 +9,83 @@
 
         // Declaramos las variables:
         const DIR_SERV = "http://10.1.2.10:8080/appwebprofe/ObtenerClave";
+        const ENV_SERV = "http://10.1.2.10:8080/appwebprofe/EnviarMensaje"
         var xmlHttp = new XMLHttpRequest();
-        var clave=0;
-        
+        var clave;
+        var original;
+        var codificado;
+        var m_encriptado;
+
+        // Al cargar la página, llamamos al servidor para que nos de la clave para la codificación.
+        onload = recogerClave;
+
         // Declaramos las funciones necesarias.
-        
-       function recogerClave() {
-            
-            xmlHttp.open("GET", DIR_SERV, true);
-            xmlHttp.send(null); 
-            clave = xmlHttp.responseText;     // Recogemos el valor de la clave
-            clave = parseInt(clave);          // La convertimos en número.                                
+        function recogerClave() {
+            xmlHttp.open("GET", DIR_SERV, false);   // Hay que ponerlo a false, ya que tenemos que esperar a que el servidor nos de la clave.
+            xmlHttp.setRequestHeader('Content-Type', 'appliction/json');
+            xmlHttp.send(null);
+            clave = parseInt(xmlHttp.responseText);
         }
-        
+
         function encriptar(mensaje_original) {
             var encriptado = "";
             var tamano = mensaje_original.length;
-
-            var codigo_letra;
+            var letra_actual;
+            var codigo_letra = 0;
             for (var i = 0; i < tamano; i++) {
 
-                codigo_letra = mensaje_original.charCodeAt(i);
-                console.log(typeof mensaje);
+                letra_actual = mensaje_original.charAt(i);
+                codigo_letra = parseInt(mensaje_original.charCodeAt(i)) + parseInt(clave);
+                console.log(clave);
                 encriptado = encriptado + codigo_letra;
             }
             return encriptado;
         }
+
         function recogerTexto() {
             var original = document.getElementById("original").value;
             var m_encriptado = encriptar(original);
             document.getElementById("codificado").value = m_encriptado;
         }
 
-        // Al cargar la página, llamamos al servidor para que nos de la clave para la codificación.
-        window.onload = recogerClave;
-        
+        // Mandamos la información al servidor.
+        // DEclaramos la función:
+        function procesarRespuesta() {
+            console.log("Procesar eventos invocados " + xmlHttp.readyState);
+            // Cuando readyState valga 4, procesamos el mensaje de respuesta.
+
+            if (xmlHttp.readyState == 4) {
+           // ya he acabado y miramos que haya ido todo bien
+                if(xmlHttp.status==200){// y bien
+                    console.log("Éxito");
+                    console.log(xmlHttp.responseText);  
+                    
+                } else {
+                    console.log("Error");
+                }
+            }
+        }
+
+        function enviarTexto() {
+            original = document.getElementById("original").value;
+            codificado = document.getElementById("codificado").value;
+            clave = parseInt(clave);
+            
+            //Generamos un objeto. Los valores a la izda se tienen que escribir como están definidos en el servidor.
+            var mensaje = {
+                mensaje_original: original,
+                mensaje_cifrado: codificado,
+                clave: clave,
+            } 
+            var mensaje_json = JSON.stringify(mensaje) // Serializar. Pasamos una variable de memoria a texto.
+
+            // Preparo la llamada
+            xmlHttp.onreadystatechange = procesarRespuesta;
+            xmlHttp.open("POST", ENV_SERV, true);
+            xmlHttp.setRequestHeader("Content-Type", "application/json");   // El tipo MIME para que el servidor sepa el archivo que le enviamos.
+            xmlHttp.send(mensaje_json);                                     // El cuerpo del mensaje.
+            return xmlHttp.responseText;
+        }
 
 
     </script>
@@ -53,6 +95,7 @@
     <textarea name="texto_original" id="original" cols="40" rows="20"></textarea>
     <button onclick="recogerTexto();">Codificar </button>
     <textarea name="texto_codificado" id="codificado" cols="40" rows="20"></textarea>
+    <button onclick="enviarTexto();">Enviar </button>
 </body>
 
 </html>
