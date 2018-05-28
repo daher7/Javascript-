@@ -15,19 +15,19 @@
 
             if (xmlHttp.readyState == 4) {
                 console.log(xmlHttp.responseText);
-            } // ya he acabado
+            
 
-            if(xmlHttp.status==200){
-                console.log("Éxito");
-                console.log(xmlHttp.responseText);
-                var mensaje_respuesta = JSON.parse(xmlHttp.responseText);
-                console.log(mensaje_respuesta.nonbre);
-                console.log(mensaje_respuesta.saludo);
+                if(xmlHttp.status==200){
+                    console.log("Éxito");
+                    console.log(xmlHttp.responseText);
+                    var mensaje_respuesta = JSON.parse(xmlHttp.responseText);
+                    console.log(mensaje_respuesta.nonbre);
+                    console.log(mensaje_respuesta.saludo);
 
-            } else {
-                console.log("Error");
-            }
-
+                } else {
+                    console.log("Error");
+                }
+            } 
         }
 
         // DEclaramos la función:
