@@ -4,33 +4,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Música from iTunes</title>
+    <link rel="stylesheet" href="css/itunes.css">
     <script>
-
         // Declaramos las variables:
         const DIR_ITUNE = "https://itunes.apple.com/search?media=music&limit=20"
         var xhr = new XMLHttpRequest();
         var titulo = "";
         var titulo_cancion;
-        
 
         // Declaramos las funciones:
         function buscarCancion() {
             titulo = document.getElementById("titulo").value;
             console.log(titulo);
-
             //Generamos un objeto con el titulo de la cancion.
             var mensaje = {
                 term: titulo
             }
             // Serializamos el mensaje y preparamos la llamada.
             var mensaje_json = JSON.stringify(mensaje);
-
             xhr.onreadystatechange = procersarRespuesta; // 
-            xhr.open("GET", DIR_ITUNE + "&term=" + titulo, true);         // Conexión con el servidor y le pasamos por la url el titulo de la cancion concatenándolo.
-            xhr.getResponseHeader("Content-Type", "application/json");    // Preparamos el fichero MIME
-            xhr.send(mensaje_json);                                       // Mandamos el título de la canción.                     
+            xhr.open("GET", DIR_ITUNE + "&term=" + titulo, true); // Conexión con el servidor y le pasamos por la url el titulo de la cancion concatenándolo.
+            xhr.getResponseHeader("Content-Type", "application/json"); // Preparamos el fichero MIME
+            xhr.send(mensaje_json); // Mandamos el título de la canción.                     
         }
-
         // Recogemos la informacion del servidor que le hemos enviado.
         function procersarRespuesta() {
             console.log("Procesar eventos invocados " + xhr.readyState);
@@ -40,7 +36,7 @@
                     console.log("Éxito");
                     // Deserializamos el mensaje que nos envía el servidor.
                     var datos_cancion = JSON.parse(xhr.responseText);
-                    
+
                     // Declaramos las variables para recorrer la informacion y "pintarla"
                     var id;
                     var grupo;
@@ -49,48 +45,43 @@
                     var precio;
                     var moneda;
                     var audio;
-
                     //Recorremos el array que es como nos devuelve los datos el servidor y a la vez vamos imprimiendo los datos en pantalla.
                     for (var i = 0; i < datos_cancion.resultCount; i++) {
-
+                        
                         portada = datos_cancion.results[i].artworkUrl100;
                         console.log(portada);
-                        dibujarCancion("<img src="+portada+">");
-                        
+                        dibujarCancion(portada);
+
                         id = datos_cancion.results[i].trackId;
                         console.log(id);
                         dibujarCancion(id);
-                        
+
                         grupo = datos_cancion.results[i].artistName;
                         console.log(grupo);
                         dibujarCancion(grupo);
-
                         cancion = datos_cancion.results[i].trackName;
                         console.log(cancion);
-                        dibujarCancion(cancion);                    
-                                                
+                        dibujarCancion(cancion);
+
                         precio = datos_cancion.results[i].trackPrice;
                         console.log(precio);
                         dibujarCancion(precio);
-
                         moneda = datos_cancion.results[i].currency;
                         console.log(moneda);
                         dibujarCancion(moneda);
-                        
+
                         audio = datos_cancion.results[i].previewUrl;
                         console.log(audio);
                         dibujarCancion(audio);
-
                     }
                 } else {
                     console.log("Fracaso");
                 }
             }
-           
-        }
-        
-        function dibujarCancion(texto){
 
+        }
+
+        function dibujarCancion(texto) {
             var tabla = document.getElementById("tabla");
             var fila = document.createElement("tr");
             var columna = document.createElement("td");
@@ -100,7 +91,6 @@
             fila.appendChild(columna);
             columna.appendChild(textoCelda);
         }
-
     </script>
 </head>
 
@@ -109,8 +99,10 @@
     <br>
     <input type="text" id="titulo">
     <button onclick="buscarCancion();" onchange="buscarCancion();">Buscar</button>
-    <table id="tabla"></table>      
-    
+    <table id="tabla">
+       
+    </table>
+
 </body>
 
 </html>
