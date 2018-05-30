@@ -15,70 +15,75 @@
         // Declaramos las funciones:
         function buscarCancion() {
             titulo = document.getElementById("titulo").value;
-            console.log(titulo);
-            //Generamos un objeto con el titulo de la cancion.
-            var mensaje = {
-                term: titulo
-            }
-            // Serializamos el mensaje y preparamos la llamada.
-            var mensaje_json = JSON.stringify(mensaje);
+            
             xhr.onreadystatechange = procersarRespuesta; // 
-            xhr.open("GET", DIR_ITUNE + "&term=" + titulo, true); // Conexión con el servidor y le pasamos por la url el titulo de la cancion concatenándolo.
-            xhr.getResponseHeader("Content-Type", "application/json"); // Preparamos el fichero MIME
-            xhr.send(mensaje_json); // Mandamos el título de la canción.                     
+            xhr.open("GET", DIR_ITUNE + "&term=" + titulo, true);       // Conexión con el servidor y le pasamos por la url el titulo de la cancion concatenándolo.
+            xhr.getResponseHeader("Content-Type", "application/json");  // Preparamos el fichero MIME
+            xhr.send(null);                                             // Mandamos el título de la canción.                     
         }
+
+
         // Recogemos la informacion del servidor que le hemos enviado.
         function procersarRespuesta() {
             console.log("Procesar eventos invocados " + xhr.readyState);
-            if (xhr.readyState == 4) {
+            if (xhr.readyState == 4 && xhr.status == 200) {
                 // Se ha establecido la conexion con el servidor y esperamos la respuesta.
-                if (xhr.status == 200) {
-                    console.log("Éxito");
-                    // Deserializamos el mensaje que nos envía el servidor.
-                    var datos_cancion = JSON.parse(xhr.responseText);
 
-                    // Declaramos las variables para recorrer la informacion y "pintarla"
-                    var id;
-                    var grupo;
-                    var cancion;
-                    var portada;
-                    var precio;
-                    var moneda;
-                    var audio;
-                    //Recorremos el array que es como nos devuelve los datos el servidor y a la vez vamos imprimiendo los datos en pantalla.
-                    for (var i = 0; i < datos_cancion.resultCount; i++) {
-                        
-                        portada = datos_cancion.results[i].artworkUrl100;
-                        console.log(portada);
-                        dibujarCancion(portada);
+                console.log("Éxito");
+                // Deserializamos el mensaje que nos envía el servidor.
+                var datos_cancion = JSON.parse(xhr.responseText);
+                
+                datos_cancion=datos_cancion.results;
 
-                        id = datos_cancion.results[i].trackId;
-                        console.log(id);
-                        dibujarCancion(id);
+                // Declaramos las variables para recorrer la informacion y "pintarla"
+                var id;
+                var grupo;
+                var cancion;
+                var portada;
+                var precio;
+                var moneda;
+                var audio;
 
-                        grupo = datos_cancion.results[i].artistName;
-                        console.log(grupo);
-                        dibujarCancion(grupo);
-                        cancion = datos_cancion.results[i].trackName;
-                        console.log(cancion);
-                        dibujarCancion(cancion);
+                //Recorremos el array, que es como nos devuelve los datos el servidor, y a la vez vamos imprimiendo los datos en pantalla.
+                for (var i = 0; i < datos_cancion.length; i++) {
 
-                        precio = datos_cancion.results[i].trackPrice;
-                        console.log(precio);
-                        dibujarCancion(precio);
-                        moneda = datos_cancion.results[i].currency;
-                        console.log(moneda);
-                        dibujarCancion(moneda);
+                    portada = datos_cancion.results[i].artworkUrl100;
+                    console.log(portada);
+                    //"<img src=" + portada + ">";
+                    dibujarCancion(portada);
 
-                        audio = datos_cancion.results[i].previewUrl;
-                        console.log(audio);
-                        dibujarCancion(audio);
-                    }
-                } else {
-                    console.log("Fracaso");
+                    id = datos_cancion.results[i].trackId;
+                    console.log(id);
+                    dibujarCancion(id);
+
+                    grupo = datos_cancion.results[i].artistName;
+                    console.log(grupo);
+                    dibujarCancion(grupo);
+
+                    cancion = datos_cancion.results[i].trackName;
+                    console.log(cancion);
+                    dibujarCancion(cancion);
+
+                    precio = datos_cancion.results[i].trackPrice;
+                    console.log(precio);
+                    dibujarCancion(precio);
+
+                    moneda = datos_cancion.results[i].currency;
+                    console.log(moneda);
+                    dibujarCancion(moneda);
+
+                    audio = datos_cancion.results[i].previewUrl;
+                    console.log(audio);
+                    dibujarCancion(audio);
                 }
+            } else {
+                console.log("Fracaso");
             }
 
+
+        }
+        function pintarPortada(portada) {
+            document.getElementById("img").src = portada;
         }
 
         function dibujarCancion(texto) {
@@ -97,11 +102,15 @@
 <body>
     <label for="titulo">Introduce el nombre de la canción:</label>
     <br>
-    <input type="text" id="titulo">
-    <button onclick="buscarCancion();" onchange="buscarCancion();">Buscar</button>
-    <table id="tabla">
-       
-    </table>
+
+    <div>
+        <input type="text" id="titulo" onchange="buscarCancion();">
+        <button onclick="buscarCancion();">Buscar</button>
+    </div>
+
+    <table id="tabla"></table>
+
+
 
 </body>
 

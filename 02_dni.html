@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Letra DNI</title>
+    <script>
+        function calcularLetra() {
+            const secuencia = "TRWAGMYFPDXBNJZSQVHLCKE"
+            var dni = document.getElementById("dni").value;
+            dni = parseInt(dni);
+            if (isNaN(dni)) {
+                alert("Debes introducir un número");
+            } else {
+                var indice = dni % 23;
+                console.log(typeof indice);
+                var letra = secuencia.charAt(indice);
+                document.getElementById("letra").value = letra;
+            }
+        }
+
+    </script>
+</head>
+
+<body>
+    <label for="dni">Introduce el número del DNI</label>
+    <input type="text" id="dni">
+    <br>
+    <label for="letra">Letra</label>
+    <input type="text" id="letra">
+    <br>
+    <button onclick="calcularLetra();">Obtener Letra</button>
+</body>
+
+</html>
