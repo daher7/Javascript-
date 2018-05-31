@@ -25,6 +25,9 @@
         var imagen_tocada = false;
         var reloj; // Declaramos la variable del temporizador pero no la inicializamos.
         var record; // Variable para recoger el tiempo que hemos tardado en encontrar las parejas.
+        var record_servidor; // REcogemos los datos de los tiempos del servidor.
+        var tiempos;
+        var nombres;
 
         var primer_img_tocada; var segunda_imagen_tocada;
         var num_aciertos = 0;//representa el número de aciertos que lleva el usuario
@@ -125,14 +128,37 @@
             console.log(xhr.getAllResponseHeaders());
             if (xhr.readyState == 4 && xhr.status == 200) {
                 console.log("Éxito");
-                console.log(xhr.responseText); // Para ver la respuesta del servidor.
+                record_servidor = xhr.responseText; // Para ver la respuesta del servidor.
+                record_servidor = JSON.parse(record_servidor);
+                console.log(record_servidor);
+                recibirTiempo();
             }
             else {
                 console.log("Fracaso");
             }
         }
 
+        function recibirTiempo() {
+            for (var i = 0; i < record_servidor.ranking.length; i++) {
+                
+
+                
+                nombres = record_servidor.ranking[i].nombre;
+                document.write(nombres + "<br/>");
+                tiempos = record_servidor.ranking[i].tiempo;
+                document.write(tiempos + "<br/>");
+
+                
+
+
+                
+            }
+            
+        }
+        console.log(nombres);
+
         // Funciones para recoger la respuesta del servidor y mostrarla en pantalla.
+
 
     </script>
 </head>
@@ -160,6 +186,8 @@
     </table>
     <div id="reloj"></div>
     <button onclick="enviarTiempo();">Enviar</button>
+
+    
 </body>
 
 </html>
