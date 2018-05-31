@@ -15,7 +15,7 @@
         // Declaramos las funciones:
         function buscarCancion() {
             titulo = document.getElementById("titulo").value;
-            
+
             xhr.onreadystatechange = procersarRespuesta; // 
             xhr.open("GET", DIR_ITUNE + "&term=" + titulo, true);       // Conexión con el servidor y le pasamos por la url el titulo de la cancion concatenándolo.
             xhr.getResponseHeader("Content-Type", "application/json");  // Preparamos el fichero MIME
@@ -32,8 +32,8 @@
                 console.log("Éxito");
                 // Deserializamos el mensaje que nos envía el servidor.
                 var datos_cancion = JSON.parse(xhr.responseText);
-                
-                datos_cancion=datos_cancion.results;
+
+                //datos_cancion=datos_cancion.results;
 
                 // Declaramos las variables para recorrer la informacion y "pintarla"
                 var id;
@@ -45,36 +45,34 @@
                 var audio;
 
                 //Recorremos el array, que es como nos devuelve los datos el servidor, y a la vez vamos imprimiendo los datos en pantalla.
-                for (var i = 0; i < datos_cancion.length; i++) {
+                for (var i = 0; i < 20; i++) {
+                
+                    document.write("<table>");
+                        document.write("<td>");
+                        portada = datos_cancion.results[i].artworkUrl100;
+                        document.write("<img src=" + portada + "> <br/>");
+                       
+                        id = datos_cancion.results[i].trackId;
+                        console.log(id);
+                        //document.write(id);
 
-                    portada = datos_cancion.results[i].artworkUrl100;
-                    console.log(portada);
-                    //"<img src=" + portada + ">";
-                    dibujarCancion(portada);
+                        grupo = datos_cancion.results[i].artistName;
+                        document.write(grupo);
 
-                    id = datos_cancion.results[i].trackId;
-                    console.log(id);
-                    dibujarCancion(id);
+                        cancion = datos_cancion.results[i].trackName;
+                        document.write(cancion);
 
-                    grupo = datos_cancion.results[i].artistName;
-                    console.log(grupo);
-                    dibujarCancion(grupo);
+                        precio = datos_cancion.results[i].trackPrice;
+                        document.write(precio);
 
-                    cancion = datos_cancion.results[i].trackName;
-                    console.log(cancion);
-                    dibujarCancion(cancion);
+                        moneda = datos_cancion.results[i].currency;
+                        document.write(moneda);
 
-                    precio = datos_cancion.results[i].trackPrice;
-                    console.log(precio);
-                    dibujarCancion(precio);
 
-                    moneda = datos_cancion.results[i].currency;
-                    console.log(moneda);
-                    dibujarCancion(moneda);
-
-                    audio = datos_cancion.results[i].previewUrl;
-                    console.log(audio);
-                    dibujarCancion(audio);
+                        audio = datos_cancion.results[i].previewUrl;
+                        document.write("</td>");
+                        //document.write("<audio src=" + audio + " controls>");
+                    document.write("</table>");
                 }
             } else {
                 console.log("Fracaso");
@@ -82,20 +80,7 @@
 
 
         }
-        function pintarPortada(portada) {
-            document.getElementById("img").src = portada;
-        }
 
-        function dibujarCancion(texto) {
-            var tabla = document.getElementById("tabla");
-            var fila = document.createElement("tr");
-            var columna = document.createElement("td");
-            var textoCelda = document.createTextNode(texto);
-
-            tabla.appendChild(fila);
-            fila.appendChild(columna);
-            columna.appendChild(textoCelda);
-        }
     </script>
 </head>
 
@@ -108,7 +93,7 @@
         <button onclick="buscarCancion();">Buscar</button>
     </div>
 
-    <table id="tabla"></table>
+
 
 
 

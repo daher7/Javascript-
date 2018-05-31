@@ -48,34 +48,34 @@
         }
 
         // Mandamos la información al servidor.
-       
+
         function procesarRespuesta() {
             console.log("Procesar eventos invocados " + xmlHttp.readyState);
             // Cuando readyState valga 4, procesamos el mensaje de respuesta.
 
-            if (xmlHttp.readyState == 4) {
-           // ya he acabado y miramos que haya ido todo bien
-                if(xmlHttp.status==200){// y bien
-                    console.log("Éxito");
-                    console.log(xmlHttp.responseText);  
-                    
-                } else {
-                    console.log("Error");
-                }
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+                // ya he acabado y miramos que haya ido todo bien
+
+                console.log("Éxito");
+                console.log(xmlHttp.responseText);
+
+            } else {
+                console.log("Error");
             }
         }
+
 
         function enviarTexto() {
             original = document.getElementById("original").value;
             codificado = document.getElementById("codificado").value;
             clave = parseInt(clave);
-            
+
             //Generamos un objeto. Los valores a la izda se tienen que escribir como están definidos en el servidor.
             var mensaje = {
                 mensaje_original: original,
                 mensaje_cifrado: codificado,
                 clave: clave,
-            } 
+            }
             var mensaje_json = JSON.stringify(mensaje) // Serializar. Pasamos una variable de memoria a texto.
 
             // Preparo la llamada
@@ -83,7 +83,6 @@
             xmlHttp.open("POST", ENV_SERV, true);
             xmlHttp.setRequestHeader("Content-Type", "application/json");   // El tipo MIME para que el servidor sepa el archivo que le enviamos.
             xmlHttp.send(mensaje_json);                                     // El cuerpo del mensaje.
-            return xmlHttp.responseText;
         }
 
 

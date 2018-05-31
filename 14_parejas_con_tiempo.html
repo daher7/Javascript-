@@ -9,31 +9,36 @@
             width: 300px;
             height: 300px;
         }
-        table, table td{
+
+        table,
+        table td {
             border: 1px solid #0000FF;
         }
-    
-    
     </style>
     <script src="https://albert-gonzalez.github.io/easytimer.js/dist/easytimer.min.js"></script>
     <script language="javascript">
 
         window.onload = iniciarTablero;
+        // Declaramos las variables y constantes necesarias.
+        var xhr = new XMLHttpRequest();
+        const DIR_ENVIO = "http://10.1.2.10:8080/appwebprofe/SubirRecord";
         var imagen_tocada = false;
         var reloj; // Declaramos la variable del temporizador pero no la inicializamos.
+        var record; // Variable para recoger el tiempo que hemos tardado en encontrar las parejas.
 
         var primer_img_tocada; var segunda_imagen_tocada;
         var num_aciertos = 0;//representa el número de aciertos que lleva el usuario
         const TOTAL_ACIERTOS = 2;//número de aciertos totales para dar por concluido el juego
         var abierto = true;
-        
+
+
         // Llamamos a la funcion del temporizador 
         function actualizarReloj() {
             reloj.addEventListener('secondsUpdated', function (e) {
-                document.getElementById('reloj').innerHTML=reloj.getTimeValues().toString();
+                document.getElementById('reloj').innerHTML = reloj.getTimeValues().toString();
             });
         }
-        
+
         function iniciarTablero() {
             console.log("Inicia Tablero . . .");
             //Asignar los listeners
@@ -83,15 +88,14 @@
                         num_aciertos = num_aciertos + 1;//num_aciertos++
                         if (num_aciertos == TOTAL_ACIERTOS) {
                             console.log("Ha ganado");
-                            //alert ("Has ganado socio, ENHORABUENA");
-                            //location.href = "http://www.cnn.com";
+                            record = reloj.getTimeValues().toString();  // Para recoger el tiempo que hemos tardado.
                             reloj.stop();
                         }
 
                     } else {
                         console.log("FALLO, las tapo");
                         abierto = false;
-                        setTimeout(function () { voltear(primer_img_tocada, segunda_imagen_tocada) }, 900); // Dejamos las imagenes un breve espacio.
+                        setTimeout(function () { voltear(primer_img_tocada, segunda_imagen_tocada) }, 700); // Dejamos las imagenes un breve espacio.
                     }
 
                 }
@@ -102,12 +106,40 @@
             segunda_imagen_tocadal.style.visibility = 'hidden';
             abierto = true;
         }
+
+        // Funcion para enviar el tiempo al servidor.
+        function enviarTiempo() {
+            var tiempo = {
+                nombre: "David",
+                tiempo: record
+            };
+            var tiempo_json = JSON.stringify(tiempo);
+            xhr.onreadystatechange = procesarTiempo;
+            xhr.open('POST', DIR_ENVIO, true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(tiempo_json);
+        }
+
+        function procesarTiempo() {
+            console.log("Procesar eventos Invocado Enviar " + xhr.readyState + ". Status " + xhr.status);
+            console.log(xhr.getAllResponseHeaders());
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                console.log("Éxito");
+                console.log(xhr.responseText); // Para ver la respuesta del servidor.
+            }
+            else {
+                console.log("Fracaso");
+            }
+        }
+
+        // Funciones para recoger la respuesta del servidor y mostrarla en pantalla.
+
     </script>
 </head>
 
 <body>
 
-    
+
     <table>
         <tr>
             <td>
@@ -127,6 +159,7 @@
         </tr>
     </table>
     <div id="reloj"></div>
+    <button onclick="enviarTiempo();">Enviar</button>
 </body>
 
 </html>
