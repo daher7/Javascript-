@@ -5,6 +5,21 @@
     <meta charset="UTF-8">
     <title>Música from iTunes</title>
     <link rel="stylesheet" href="css/itunes.css">
+
+</head>
+
+<body>
+    <label for="titulo">Introduce el nombre de la canción:</label>
+    <br>
+
+    <div>
+        <input type="text" id="titulo" onchange="buscarCancion();">
+        <button onclick="buscarCancion();">Buscar</button>
+    </div>
+    <div id="canciones">
+
+    </div>
+
     <script>
         // Declaramos las variables:
         const DIR_ITUNE = "https://itunes.apple.com/search?media=music&limit=20"
@@ -17,9 +32,9 @@
             titulo = document.getElementById("titulo").value;
 
             xhr.onreadystatechange = procersarRespuesta; // 
-            xhr.open("GET", DIR_ITUNE + "&term=" + titulo, true);       // Conexión con el servidor y le pasamos por la url el titulo de la cancion concatenándolo.
-            xhr.getResponseHeader("Content-Type", "application/json");  // Preparamos el fichero MIME
-            xhr.send(null);                                             // Mandamos el título de la canción.                     
+            xhr.open("GET", DIR_ITUNE + "&term=" + titulo, true); // Conexión con el servidor y le pasamos por la url el titulo de la cancion concatenándolo.
+            xhr.getResponseHeader("Content-Type", "application/json"); // Preparamos el fichero MIME
+            xhr.send(null); // Mandamos el título de la canción.                     
         }
 
 
@@ -44,58 +59,31 @@
                 var moneda;
                 var audio;
 
+                var caja_canciones = document.querySelector("#canciones");
                 //Recorremos el array, que es como nos devuelve los datos el servidor, y a la vez vamos imprimiendo los datos en pantalla.
                 for (var i = 0; i < 20; i++) {
-                
-                    document.write("<table>");
-                        document.write("<td>");
-                        portada = datos_cancion.results[i].artworkUrl100;
-                        document.write("<img src=" + portada + "> <br/>");
-                       
-                        id = datos_cancion.results[i].trackId;
-                        console.log(id);
-                        //document.write(id);
 
-                        grupo = datos_cancion.results[i].artistName;
-                        document.write(grupo);
+                    portada = "<img src=" + datos_cancion.results[i].artworkUrl100 + ">";
+                    id = datos_cancion.results[i].trackId;
+                    grupo = datos_cancion.results[i].artistName;
+                    cancion = datos_cancion.results[i].trackName;
+                    precio = datos_cancion.results[i].trackPrice;
+                    moneda = datos_cancion.results[i].currency;
+                    audio = datos_cancion.results[i].previewUrl;
 
-                        cancion = datos_cancion.results[i].trackName;
-                        document.write(cancion);
-
-                        precio = datos_cancion.results[i].trackPrice;
-                        document.write(precio);
-
-                        moneda = datos_cancion.results[i].currency;
-                        document.write(moneda);
-
-
-                        audio = datos_cancion.results[i].previewUrl;
-                        document.write("</td>");
-                        //document.write("<audio src=" + audio + " controls>");
-                    document.write("</table>");
+                    console.log(grupo, portada);
+                    
+                    // Pintamos los datos en el div correspondiente.
+                    var parrafo = document.createElement("p"); // Creamos un parrafo
+                    parrafo.append(portada + " - " + grupo + " - " + cancion + "-" + precio + " - " + moneda + " - " + id); // Le añadimos los campos.
+                    caja_canciones.append(parrafo); // AL div le añadimos los diferentes párrafos.
                 }
             } else {
                 console.log("Fracaso");
             }
 
-
         }
-
     </script>
-</head>
-
-<body>
-    <label for="titulo">Introduce el nombre de la canción:</label>
-    <br>
-
-    <div>
-        <input type="text" id="titulo" onchange="buscarCancion();">
-        <button onclick="buscarCancion();">Buscar</button>
-    </div>
-
-
-
-
 
 </body>
 
