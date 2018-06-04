@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Select con Ajax</title>
+
+</head>
+
+<body>
+    <h2>Selecciona un departamento</h2>
+    <select name="departamentos" id="departamentos">
+    </select>
+
+    <div id="personas"></div>
+    <script>
+        "use strict"
+        // Declaramos las variables y constantes necesarias
+        const url_consulta = "http://10.1.2.10:8080/appwebprofe/CargaMenuSelect";
+        const url_trabajadores = "http://10.1.2.10:8080/appwebprofe/CargarTrabajadores";
+        var xhr = new XMLHttpRequest();
+        var departamentos;
+        var seleccion = document.getElementById("departamentos");
+
+        // Rellenamos el select al cargar la página.
+        onload = llamarServidor;
+
+        function llamarServidor() {
+            console.log("Soy el select");
+            xhr.onreadystatechange = procesarRespuesta;
+            xhr.open("get", url_consulta, true);
+            xhr.getResponseHeader("Content-Type", "application/json");
+            xhr.send(null);
+        }
+
+        function procesarRespuesta() {
+            console.log("Procesar eventos invocados " + xhr.readyState);
+            if (xhr.readyState == 4) {
+                if (xhr.status == 200) {
+                    console.log("Éxito");
+                    departamentos = JSON.parse(xhr.responseText);
+                    console.log(departamentos);
+                    rellenarSelect();
+                }
+            } else {
+                console.log("Fracaso");
+            }
+        }
+
+        function rellenarSelect() {
+            for (let indice in departamentos) {
+                //console.log(departamentos[indice]);
+                var numero = departamentos[indice].numero;
+                var nombre = departamentos[indice].nombre;
+                console.log(numero + " - " + nombre);
+
+                var opcion = document.createElement("option");
+                opcion.value = numero; // Asignamos numero a value del option.
+                opcion.append(nombre);
+                seleccion.append(opcion);
+            }
+        }
+    </script>
+
+</body>
+
+</html>

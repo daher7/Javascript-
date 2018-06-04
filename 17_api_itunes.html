@@ -19,7 +19,7 @@
     <div id="canciones">
 
     </div>
-
+   
     <script>
         // Declaramos las variables:
         const DIR_ITUNE = "https://itunes.apple.com/search?media=music&limit=20"
@@ -47,9 +47,7 @@
                 console.log("Éxito");
                 // Deserializamos el mensaje que nos envía el servidor.
                 var datos_cancion = JSON.parse(xhr.responseText);
-
-                //datos_cancion=datos_cancion.results;
-
+                
                 // Declaramos las variables para recorrer la informacion y "pintarla"
                 var id;
                 var grupo;
