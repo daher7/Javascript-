@@ -19,7 +19,7 @@
     <div id="canciones">
 
     </div>
-   
+
     <script>
         // Declaramos las variables:
         const DIR_ITUNE = "https://itunes.apple.com/search?media=music&limit=20"
@@ -37,7 +37,6 @@
             xhr.send(null); // Mandamos el título de la canción.                     
         }
 
-
         // Recogemos la informacion del servidor que le hemos enviado.
         function procersarRespuesta() {
             console.log("Procesar eventos invocados " + xhr.readyState);
@@ -47,7 +46,7 @@
                 console.log("Éxito");
                 // Deserializamos el mensaje que nos envía el servidor.
                 var datos_cancion = JSON.parse(xhr.responseText);
-                
+
                 // Declaramos las variables para recorrer la informacion y "pintarla"
                 var id;
                 var grupo;
@@ -61,7 +60,7 @@
                 //Recorremos el array, que es como nos devuelve los datos el servidor, y a la vez vamos imprimiendo los datos en pantalla.
                 for (var i = 0; i < 20; i++) {
 
-                    portada = "<img src=" + datos_cancion.results[i].artworkUrl100 + ">";
+                    portada = datos_cancion.results[i].artworkUrl100;
                     id = datos_cancion.results[i].trackId;
                     grupo = datos_cancion.results[i].artistName;
                     cancion = datos_cancion.results[i].trackName;
@@ -70,11 +69,16 @@
                     audio = datos_cancion.results[i].previewUrl;
 
                     console.log(grupo, portada);
-                    
+
                     // Pintamos los datos en el div correspondiente.
                     var parrafo = document.createElement("p"); // Creamos un parrafo
-                    parrafo.append(portada + " - " + grupo + " - " + cancion + "-" + precio + " - " + moneda + " - " + id); // Le añadimos los campos.
+                    var caratula = document.createElement("img");
+
+                    caratula.src = portada;
+                    parrafo.append(grupo + " - " + cancion + "-" + precio + " - " + moneda + " - " + id); // Le añadimos los campos.
+
                     caja_canciones.append(parrafo); // AL div le añadimos los diferentes párrafos.
+                    caja_canciones.append(caratula);
                 }
             } else {
                 console.log("Fracaso");
