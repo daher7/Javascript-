@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Evento Marcador</title>
+</head>
+
+<body>
+
+    <div id="foto"></div>
+    <table>
+        <tr>
+            <td>
+                <h2>Local</h2>
+                <div id="local"></div>
+            </td>
+            <td>
+                <h2>Visitante</h2>
+                <div id="visitante"></div>
+            </td>
+        </tr>
+
+    </table>
+
+
+    <div id="minuto"></div>
+    <div id="comentario"></div>
+
+    <script>
+        "use strict"
+        // Mostramos la información al cargar la página.
+        onload = llamarServidor;
+
+
+        // Declaramos variables y funciones necesarias.
+        const url_consulta = "http://10.1.2.10:8080/Marcador/ActualizarInfoPartido";
+        const url_portada = "http://10.1.2.10:8080/Marcador/";
+        var xhr = new XMLHttpRequest();
+        var datos_partido;
+        var local;
+        var visitante;
+        var portada;
+        var minuto;
+        var comentario;
+
+        var div_minuto = document.querySelector("#minuto");
+        var div_comentario = document.querySelector("#comentario");
+
+
+        var p_minuto = document.createElement("p");
+        var p_comentario = document.createElement("p");
+
+        function llamarServidor() {
+            console.log("Me has llamado");
+            xhr.onreadystatechange = procesarRespuesta;
+            xhr.open("get", url_consulta, true);
+            xhr.getResponseHeader("Content-Type", "application/json");
+            xhr.send(null);
+        }
+
+        function procesarRespuesta() {
+            console.log("Procesar eventos invocados " + xhr.readyState);
+            if (xhr.readyState == 4) {
+                if (xhr.status == 200) {
+                    console.log("Éxito");
+                    datos_partido = JSON.parse(xhr.responseText);
+                    mostrarDatosPartido();
+
+                } else {
+                    console.log("Fracaso");
+                }
+            }
+        }
+
+        function mostrarDatosPartido() {
+
+            local = datos_partido.marcador.goles_local;
+            visitante = datos_partido.marcador.goles_visitante;
+            portada = datos_partido.fotopartido;
+
+            console.log(local + "-" + visitante + "-" + portada); // Los goles 
+            pintarGolesImagen();
+
+            for (let indice in datos_partido.listacomentarios) {
+
+                minuto = datos_partido.listacomentarios[indice].minuto;
+                comentario = datos_partido.listacomentarios[indice].comentario;
+
+                console.log(minuto + " - " + comentario); // Minuto y comentario
+
+
+                p_minuto.appendChild(minuto);
+
+                p_comentario.innerHTML = comentario;
+                div_comentario.appendChild(p_comentario);
+
+                //pintarMinutoComentario();
+            }
+
+        }
+
+        function pintarGolesImagen() {
+
+            
+            var div_foto = document.querySelector("#foto");
+            var div_local = document.querySelector("#local");
+            var div_visitante = document.querySelector("#visitante");
+            var h3_local = document.createElement("h3");
+            var h3_visitante = document.createElement("h3");
+            var foto_partido = document.createElement("img");
+
+            h3_local.innerHTML = local
+            div_local.appendChild(h3_local);
+
+            h3_visitante.innerHTML = visitante;
+            div_visitante.appendChild(h3_visitante);
+
+            foto_partido.src = url_portada + portada;
+            div_foto.appendChild(foto_partido);
+
+        }
+    </script>
+</body>
+
+</html>

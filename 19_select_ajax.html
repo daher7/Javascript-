@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Select con Ajax</title>
-
 </head>
 
 <body>
@@ -15,21 +14,25 @@
     </select>
 
     <div id="personas"></div>
+
+    <!-- Aqui escribimos el codigo javascript para que pueda reconocer los elementos del DOM -->
     <script>
         "use strict"
         // Declaramos las variables y constantes necesarias
         const url_consulta = "http://10.1.2.10:8080/appwebprofe/CargaMenuSelect";
-        const url_trabajadores = "http://10.1.2.10:8080/appwebprofe/CargarTrabajadores";
+        const url_trabajadores = "http://10.1.2.10:8080/appwebprofe/CargarTrabajadores?dpto=";
         var xhr = new XMLHttpRequest();
         var departamentos;
         var seleccion = document.getElementById("departamentos");
+        var numero;
+        var nombre;
 
         // Rellenamos el select al cargar la página.
         onload = llamarServidor;
 
         function llamarServidor() {
             console.log("Soy el select");
-            xhr.onreadystatechange = procesarRespuesta;
+            xhr.onreadystatechange = procesarRespuesta; // Preparamos la respuesta de los datos que nos devuelve el servidor.
             xhr.open("get", url_consulta, true);
             xhr.getResponseHeader("Content-Type", "application/json");
             xhr.send(null);
@@ -43,21 +46,21 @@
                     departamentos = JSON.parse(xhr.responseText);
                     console.log(departamentos);
                     rellenarSelect();
+                } else {
+                    console.log("Fracaso");
                 }
-            } else {
-                console.log("Fracaso");
             }
         }
 
         function rellenarSelect() {
             for (let indice in departamentos) {
                 //console.log(departamentos[indice]);
-                var numero = departamentos[indice].numero;
-                var nombre = departamentos[indice].nombre;
+                numero = departamentos[indice].numero;
+                nombre = departamentos[indice].nombre;
                 console.log(numero + " - " + nombre);
 
                 var opcion = document.createElement("option");
-                opcion.value = numero; // Asignamos numero a value del option.
+                opcion.setAttribute("value", numero); // Asignamos numero a value del option.
                 opcion.append(nombre);
                 seleccion.append(opcion);
             }
